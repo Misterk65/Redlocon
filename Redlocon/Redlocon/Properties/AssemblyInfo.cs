@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Redlocon")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("R.E.D. Logfile Consolidator")]
+[assembly: AssemblyDescription("This program is made to search through log files intended for R.E.D. certification. Extracting the relevant data and add the graphics if relevant. Finally store all together in a RTF or DOCX file.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("7layers ITP Services")]
 [assembly: AssemblyProduct("Redlocon")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
