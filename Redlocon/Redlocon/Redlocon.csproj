@@ -73,9 +73,28 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SupportedTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupportedTest.Designer.cs">
+      <DependentUpon>SupportedTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TS8950Classes\CTC132.cs" />
+    <Compile Include="TS8950Classes\CTC134.cs" />
+    <Compile Include="TS8950Classes\CTC131.cs" />
+    <Compile Include="TS8950Classes\CTC511.cs" />
+    <Compile Include="TS8950Classes\CTC510.cs" />
+    <Compile Include="TS8950Classes\CTC59.cs" />
+    <Compile Include="TS8950Classes\CTC543.cs" />
+    <Compile Include="TS8950Classes\CTC52.cs" />
     <Compile Include="TS8950Classes\CTC13341.cs" />
+    <Compile Include="TS8950Classes\CTC65.cs" />
+    <Compile Include="TS8950Classes\CTC64.cs" />
+    <Compile Include="TS8950Classes\CTC62.cs" />
     <Compile Include="TS8950Classes\Cts8950Common.cs" />
+    <Compile Include="TS8980Classes\Ctc1317341.cs" />
     <Compile Include="TS8980Classes\Ctc13341.cs" />
+    <Compile Include="TS8980Classes\Ctc4231fdd.cs" />
     <Compile Include="TS8980Classes\Cts8980Common.cs" />
     <EmbeddedResource Include="AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>
@@ -92,6 +111,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SupportedTest.resx">
+      <DependentUpon>SupportedTest.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -108,6 +130,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Documentation\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Supported.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

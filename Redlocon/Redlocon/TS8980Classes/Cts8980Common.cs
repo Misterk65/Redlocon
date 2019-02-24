@@ -25,8 +25,11 @@ namespace Redlocon.TS8980Classes
 
             xmldoc.Load(fs);
 
-            var nodeTestPlanName = xmldoc.SelectSingleNode("NewDataSet/testcaserun/TestplanName");
-            Cproperties.TestPlanName = nodeTestPlanName.InnerText;
+            var nodeTestCaseNumber = xmldoc.SelectSingleNode("NewDataSet/testcase/TestcaseNumber");
+            Cproperties.TestCaseName = nodeTestCaseNumber.InnerText;
+
+            var nodeTestCaseName = xmldoc.SelectSingleNode("NewDataSet/testcase/TestcaseName");
+            Cproperties.TestCaseName = Cproperties.TestCaseName + " " + nodeTestCaseName.InnerText;
 
             var nodeDocxReportName = xmldoc.SelectSingleNode("NewDataSet/testcaserun/ParameterFile");
             Cproperties.DocxReportName = nodeDocxReportName.InnerText;
@@ -47,7 +50,7 @@ namespace Redlocon.TS8980Classes
 
         }
 
-        public static void GetGraphicResults(string filePath)
+        /*public static void GetGraphicResults(string filePath)
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             XmlDocument xmldoc = new XmlDocument();
@@ -92,6 +95,6 @@ namespace Redlocon.TS8980Classes
                 }
                 reader.Close();
             }
-        }
+        }*/
     }
 }

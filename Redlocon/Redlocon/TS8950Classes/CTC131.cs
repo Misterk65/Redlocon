@@ -6,13 +6,13 @@ using Redlocon.TS8980Classes;
 
 namespace Redlocon.TS8950Classes
 {
-    public class CTC13341
-    {
+    public class CTC131
+    { //TEST         NUM          MAX PK       PK PH ERR    MAX RMS      RMS PH ERR   MAX FR       FR ERR       AV FR        INTERIM
+      //STEP         BURSTS       PH ERR deg   LIMIT deg    PH ERR deg   LIMIT deg    ERR ppm      LIMIT ppm    ERR ppm      RESULT
         private static readonly string[] TableHeader1 = new string[]
         {
-            "TEST\nSTEP", "BURST\nNUM", "AVG PWR\nin dBm","HI LIM\nin dBm", "LO LIM\nin dBm",
-            "PWR SEP\nin dB","FROM\nSTEP","LO LIM\nin dB","HI LIM\nin dB","AV PWR\nRESULT",
-            "PWR SEP\nRESULT","RAMP\nRESULT", "TIM ERR\nin µs","ABS LIM\nin µs","TIMING\nRESULT"
+            "TEST\nSTEP", "NUM\nBURSTS", "MAX PK\nPH ERR deg","PK PH ERR\nLIMIT deg","MAX RMS\nPH ERR deg", "RMS PH ERR\nLIMIT deg",
+            "MAX FR\nERR ppm","FR ERR\nLIMIT ppm","AV FR\nERR ppm","INTERIM\nRESULT"
         };
 
         public static void CreateTableContent(string filePath)
@@ -23,6 +23,9 @@ namespace Redlocon.TS8950Classes
 
             using (StreamReader reader = new StreamReader(filePath))
             {
+                string[] stepStrings;
+                string step = "";
+
                 while (true)
                 {
                     string line = reader.ReadLine();
@@ -32,7 +35,24 @@ namespace Redlocon.TS8950Classes
                         break;
                     }
 
+                    /*if (line.Contains("Test Step Parameters") && line.Contains("Not applicable") == false)
+                    {
+                        stepStrings = line.Split(':');
+                        step = stepStrings[1].Trim();
+                        stepStrings = step.Split(' ');
+                        step = stepStrings[1];
+                    }*/
+
                     if (Regex.IsMatch(line, @"^\d+"))
+                    {
+                        line = Regex.Replace(line, "\\s+", ";");
+
+                        measValues = line;
+                        measValues = measValues.Substring(0, measValues.Length - 1);
+                        BodyList.Add(measValues);
+                    }
+
+                    /*if (Regex.IsMatch(line, @"^\d+"))
                     {
                         line = Regex.Replace(line, "\\s+", ";");
                         if (i <=1)
@@ -52,9 +72,8 @@ namespace Redlocon.TS8950Classes
                                 BodyList.Add(measValues);
                                 measValues = "";
                             }
-                        }
-
-                    }
+                        }*/
+           
                 }
             }
 
@@ -62,7 +81,7 @@ namespace Redlocon.TS8950Classes
             Cproperties.TableBody = BodyList.ToArray();
         }
 
-        public static void CreateReportTC13341(string filePath)
+        public static void CreateReportTC131(string filePath)
         {
             Cts8950Common.GetTestReportParameter(filePath);
             CreateTableContent(filePath);

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -28,9 +30,15 @@ namespace Redlocon
             toolStripStatusLabelVer.Text = "Version: " + GetApplicationVersion();
             chkBoxDelZip.Text = "Delete Zip-Files";
             btnExtractResults.Text = "Extract Data";
+            
+            ReadSettingsXML();
+
+            lblResRoot.Text = "Result Root Path: " + ResultRootPath;
+            lblRptOut.Text = "Report Output Root Path: " + ReportOutputPath;
+            Cproperties.TC65Counter = 0;
 
             //Properties in CSearchDirsRecursively
-            
+
             CSearchDirsRecursively.DeleteZip = false;
 
         }
@@ -67,6 +75,8 @@ namespace Redlocon
             DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
+                lblResRoot.Text = "Result Root Path: " + ResultRootPath;
+                
                 //
                 //Select the destination folder
                 //
@@ -82,7 +92,8 @@ namespace Redlocon
                     searchDirsRecursively.FileList(ResultRootPath));
                 
                 foreach (var itemFileInfo in searchDirsRecursively.FileList(ResultRootPath))
-                {
+                { 
+
                     if (!itemFileInfo.Name.StartsWith("."))
                     {
                         if (itemFileInfo.Name.EndsWith(".txt") || itemFileInfo.Name.EndsWith(".xml") ||
@@ -100,6 +111,7 @@ namespace Redlocon
 
                                 var node = xmldoc.SelectSingleNode("testcasereport/header/testcasenumber");
                                 var attr = node.InnerText;
+                                attr = Regex.Replace(attr, @"[a-zA-Z]+", "").Trim();
 
                                 Cselection.SelectTestCase(attr,itemFileInfo.FullName);
                             }
@@ -112,6 +124,7 @@ namespace Redlocon
 
                                 var node = xmldoc.SelectSingleNode("NewDataSet/testcase/TestcaseNumber");
                                 var attr = node.InnerText;
+                                attr = Regex.Replace(attr, @"[a-zA-Z]+", "").Trim();
 
                                 Cselection.SelectTestCase(attr, itemFileInfo.FullName);
                             }
@@ -132,6 +145,13 @@ namespace Redlocon
                                         {
                                             var helpArr = line.Split(':');
                                             helpArr = helpArr[1].TrimStart().Split(' ');
+                                            if (helpArr[0].StartsWith("TC5."))
+                                            {
+                                                helpArr = helpArr[0].Split('.');
+                                                helpArr[0] = helpArr[0] + "." +
+                                                             helpArr[1] + "." +
+                                                             helpArr[2];
+                                            }
                                             reader.Close();
                                             Cselection.SelectTestCase(helpArr[0], itemFileInfo.FullName);
                                             break;
@@ -159,6 +179,7 @@ namespace Redlocon
             if (result == DialogResult.OK)
             {
                 ReportOutputPath = folderBrowserDialogDest.SelectedPath;
+                lblRptOut.Text = "Report Output Root Path: " + ReportOutputPath;
             }
             else
             {
@@ -172,5 +193,92 @@ namespace Redlocon
             Close();
             Dispose();
         }
+
+        private void supportedTestsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form frmSupportForm = new SupportedTest();
+            frmSupportForm.ShowDialog();
+        }
+
+        private void WriteSettingsXML()
+        {
+            if (File.Exists(Path.Combine(Application.StartupPath, "Settings.xml")))
+            {
+                //File.Delete(Path.Combine(Application.StartupPath, "Settings.xml"));
+
+                using (XmlWriter writer = XmlWriter.Create(Path.Combine(Application.StartupPath, "Settings.xml")))
+                {
+                    writer.WriteStartDocument();
+                    writer.WriteStartElement("ProgramSettings");
+
+                    if (ResultRootPath != null)
+                    {
+                        writer.WriteElementString("SourcePath", ResultRootPath);
+                    }
+
+                    if (ReportOutputPath != null)
+                    {
+                        writer.WriteElementString("DestinationPath", ReportOutputPath);
+                    }
+
+
+                    writer.WriteEndElement();
+                    writer.WriteEndDocument();
+                    writer.Close();
+                } 
+            }
+        }
+
+        private void ReadSettingsXML() //todo
+        {
+            if (File.Exists(Path.Combine(Application.StartupPath, "Settings.xml")))
+            {
+                try
+                {
+                    // Create an XML reader for this file.
+                    using (XmlReader reader = XmlReader.Create(Path.Combine(Application.StartupPath, "Settings.xml")))
+                    {
+                        while (reader.Read())
+                        {
+                            // Only detect start elements.
+                            if (reader.IsStartElement())
+                            {
+                                // Get element name and switch on it.
+                                switch (reader.Name)
+                                {
+                                    case "SourcePath":
+                                        ResultRootPath = reader.Value;
+                                        lblResRoot.Text = "Result Root Path: " + ResultRootPath;
+                                        break;
+                                    case "DestinationPath":
+                                        ReportOutputPath = reader.Value;
+                                        lblRptOut.Text = "Report Output Root Path: " + ReportOutputPath;
+                                        break;
+                                }
+                            }
+                        }
+                        reader.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+        }
+
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            WriteSettingsXML();
+        }
+
+        public static void ResetVariables()
+        {
+            TestcaseSourcePath = "";
+            Cproperties.ArrayOfGraphics = "";
+            Cproperties.TestCaseName = "";
+        }
+
     }
 }

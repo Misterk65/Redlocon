@@ -6,13 +6,13 @@ using Redlocon.TS8980Classes;
 
 namespace Redlocon.TS8950Classes
 {
-    public class CTC13341
-    {
+    public class CTC132
+    { //TEST              NUM               MAX FR            FR ERR            AV FR             INTERIM
+      //STEP              BURSTS            ERR               LIMIT             ERR               RESULT
         private static readonly string[] TableHeader1 = new string[]
         {
-            "TEST\nSTEP", "BURST\nNUM", "AVG PWR\nin dBm","HI LIM\nin dBm", "LO LIM\nin dBm",
-            "PWR SEP\nin dB","FROM\nSTEP","LO LIM\nin dB","HI LIM\nin dB","AV PWR\nRESULT",
-            "PWR SEP\nRESULT","RAMP\nRESULT", "TIM ERR\nin µs","ABS LIM\nin µs","TIMING\nRESULT"
+            "TEST\nSTEP", "NUM\nBURSTS", "MAX FR\nERR","FR ERR\nLIMIT","AV FR\nERR",
+            "INTERIM\nRESULT"
         };
 
         public static void CreateTableContent(string filePath)
@@ -23,6 +23,7 @@ namespace Redlocon.TS8950Classes
 
             using (StreamReader reader = new StreamReader(filePath))
             {
+                
                 while (true)
                 {
                     string line = reader.ReadLine();
@@ -35,25 +36,15 @@ namespace Redlocon.TS8950Classes
                     if (Regex.IsMatch(line, @"^\d+"))
                     {
                         line = Regex.Replace(line, "\\s+", ";");
-                        if (i <=1)
-                        {
-                            if (measValues==String.Empty)
-                            {
-                                measValues = line;
-                                i++;
-                            }
-                            else
-                            {
-                                measValues = measValues + line.Substring(2);
-                                measValues = measValues.Substring(0, measValues.Length - 1);
-                                measValues = measValues.Replace("Not;Meas", "Not Meas");//todo better way to be found
-                                measValues = measValues.Replace(";;", ";");//todo better way to be found
-                                i = 0;
-                                BodyList.Add(measValues);
-                                measValues = "";
-                            }
-                        }
 
+                        string[] chkArr = line.Split(';');
+
+                        if (chkArr.Length >6)
+                        {
+                            measValues = line;
+                            measValues = measValues.Substring(0, measValues.Length - 1);
+                            BodyList.Add(measValues); 
+                        }
                     }
                 }
             }
@@ -62,7 +53,7 @@ namespace Redlocon.TS8950Classes
             Cproperties.TableBody = BodyList.ToArray();
         }
 
-        public static void CreateReportTC13341(string filePath)
+        public static void CreateReportTC132(string filePath)
         {
             Cts8950Common.GetTestReportParameter(filePath);
             CreateTableContent(filePath);

@@ -31,12 +31,15 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelVer = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.closeApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.chkBoxDelZip = new System.Windows.Forms.CheckBox();
             this.btnExtractResults = new System.Windows.Forms.Button();
             this.folderBrowserDialogDest = new System.Windows.Forms.FolderBrowserDialog();
-            this.closeApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.supportedTestsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblResRoot = new System.Windows.Forms.Label();
+            this.lblRptOut = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -63,12 +66,20 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.closeApplicationToolStripMenuItem,
+            this.supportedTestsToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1894, 42);
+            this.menuStrip1.Size = new System.Drawing.Size(1894, 40);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // closeApplicationToolStripMenuItem
+            // 
+            this.closeApplicationToolStripMenuItem.Name = "closeApplicationToolStripMenuItem";
+            this.closeApplicationToolStripMenuItem.Size = new System.Drawing.Size(212, 36);
+            this.closeApplicationToolStripMenuItem.Text = "&Close Application";
+            this.closeApplicationToolStripMenuItem.Click += new System.EventHandler(this.closeApplicationToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -98,24 +109,45 @@
             this.btnExtractResults.UseVisualStyleBackColor = true;
             this.btnExtractResults.Click += new System.EventHandler(this.btnExtractResults_Click);
             // 
-            // closeApplicationToolStripMenuItem
+            // supportedTestsToolStripMenuItem
             // 
-            this.closeApplicationToolStripMenuItem.Name = "closeApplicationToolStripMenuItem";
-            this.closeApplicationToolStripMenuItem.Size = new System.Drawing.Size(212, 38);
-            this.closeApplicationToolStripMenuItem.Text = "&Close Application";
-            this.closeApplicationToolStripMenuItem.Click += new System.EventHandler(this.closeApplicationToolStripMenuItem_Click);
+            this.supportedTestsToolStripMenuItem.Name = "supportedTestsToolStripMenuItem";
+            this.supportedTestsToolStripMenuItem.Size = new System.Drawing.Size(198, 36);
+            this.supportedTestsToolStripMenuItem.Text = "&Supported Tests";
+            this.supportedTestsToolStripMenuItem.Click += new System.EventHandler(this.supportedTestsToolStripMenuItem_Click);
+            // 
+            // lblResRoot
+            // 
+            this.lblResRoot.AutoSize = true;
+            this.lblResRoot.Location = new System.Drawing.Point(12, 264);
+            this.lblResRoot.Name = "lblResRoot";
+            this.lblResRoot.Size = new System.Drawing.Size(118, 25);
+            this.lblResRoot.TabIndex = 4;
+            this.lblResRoot.Text = "ResultRoot";
+            // 
+            // lblRptOut
+            // 
+            this.lblRptOut.AutoSize = true;
+            this.lblRptOut.Location = new System.Drawing.Point(12, 316);
+            this.lblRptOut.Name = "lblRptOut";
+            this.lblRptOut.Size = new System.Drawing.Size(79, 25);
+            this.lblRptOut.TabIndex = 5;
+            this.lblRptOut.Text = "RptOut";
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1894, 1129);
+            this.Controls.Add(this.lblRptOut);
+            this.Controls.Add(this.lblResRoot);
             this.Controls.Add(this.btnExtractResults);
             this.Controls.Add(this.chkBoxDelZip);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "FrmMain";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -137,6 +169,9 @@
         private System.Windows.Forms.Button btnExtractResults;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogDest;
         private System.Windows.Forms.ToolStripMenuItem closeApplicationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem supportedTestsToolStripMenuItem;
+        private System.Windows.Forms.Label lblResRoot;
+        private System.Windows.Forms.Label lblRptOut;
     }
 }
 

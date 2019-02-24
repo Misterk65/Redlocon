@@ -28,18 +28,15 @@ namespace Redlocon.TS8980Classes
                             Cproperties.DocxReportName.Length - 4);
 
                     }
-                    else if (line.StartsWith("Test conducted"))
+                    else if(line.Contains("Test Case"))
                     {
-                        //DocxReportNameExt
-                        var helpArr = Regex.Replace(line, @"\s+", "").Split(':');
-                        helpArr[1] = helpArr[1].Replace("/", "");
-                        Cproperties.TestPlanName = helpArr[1] + helpArr[2] + helpArr[3];
-                    }
-                    else if(line.Contains("Additional Info"))
-                    {
-                        //TestPlanName
-                        var helpArr = Regex.Replace(line, @"\s+", "").Split(':');
-                        Cproperties.TestPlanName = helpArr[1] + "-" + Cproperties.TestPlanName;
+                        //Test Case Name
+                        var helpArr = Regex.Replace(line, @"\s+", " ").Split(':');
+                        //var helpArr = line.Split(':');
+                        if (Cproperties.TestCaseName==null)
+                        {
+                            Cproperties.TestCaseName = helpArr[1]; 
+                        }
 
                     }
                     else if (line.StartsWith("Final Verdict"))

@@ -1,22 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Redlocon.TS8980Classes
 {
-    class Ctc13341
+    class Ctc4231fdd
     {
-
         /*
-         * Specific Procedure for TC 13.3.4.1 on TS8980
+         * Specific Procedure for TC 4.2.3.1 FDD on TS8980
          * 
         */
-
+        
         private static readonly string[] TableHeader1 = new string[]
         {
-            "Test Step", "Measurement Timeslot", "Average Power Measured",
-            "Lower Limit", "Upper Limit","Power Separation","From Test Step",
-            "Lower Limit","Upper Limit","Timing Error","Absolute Limit",
-            "Power Ramp Result", "Interim Result"
+            "Measured", "Nominal", "Lower Limit ","Upper Limit", "Deviation", "Deviation"
         };
 
         public static void CreateTableContent(string filePath)
@@ -53,24 +51,21 @@ namespace Redlocon.TS8980Classes
                 helpVarTableBody = helpVarTableBody.Substring(0, helpVarTableBody.Length - 1);
 
                 /*
-                 * [0][2][3][4][5][8][7][9][10][13][15][21][1]
+                 * [3][8][4][5]([3]-[8])[1]
                  * Value arrangement
                  */
                 string[] helpArr = helpVarTableBody.Split(';');
-                helpVarTableBody = helpArr[0] + ";" +
-                                   helpArr[2].Substring(helpArr[2].Length - 2) + ";" +
-                                   helpArr[3] + ";" +
+
+                double diff3and8 = Convert.ToDouble(Regex.Replace(helpArr[3].Trim(), @"[a-zA-Z]+","")) 
+                                - Convert.ToDouble(Regex.Replace(helpArr[8].Trim(), @"[a-zA-Z]+", ""));
+
+                helpVarTableBody = helpArr[3] + ";" +
+                                   helpArr[8] + ";" +
                                    helpArr[4] + ";" +
                                    helpArr[5] + ";" +
-                                   helpArr[8] + ";" +
-                                   helpArr[7].Substring(helpArr[7].Length-2) + ";" +
-                                   helpArr[9] + ";" +
-                                   helpArr[10] + ";" +
-                                   helpArr[13] + ";" +
-                                   helpArr[15] + ";" +
-                                   helpArr[21] + ";" +
+                                   diff3and8.ToString("F1") + " dBm;" +
                                    helpArr[1];
-
+                                   
                 BodyList.Add(helpVarTableBody);
             }
 
@@ -78,7 +73,7 @@ namespace Redlocon.TS8980Classes
             Cproperties.TableHeader = TableHeader1;
         }
 
-        public static void CreateReportTc13341(string filePath)
+        public static void CreateReportTc4231fdd(string filePath)
         {
             Cts8980Common.GetFinalResults(filePath);
             //Cts8980Common.GetGraphicResults(filePath);

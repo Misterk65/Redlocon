@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-using Redlocon.TS8980Classes;
 using Xceed.Words.NET;
 using Font = Xceed.Words.NET.Font;
 using Image = Xceed.Words.NET.Image;
@@ -63,7 +61,7 @@ namespace Redlocon
             }
 
             Paragraph TabPar1 = doc.InsertParagraph();
-            TabPar1.Append("Test Plan: " + Cproperties.TestPlanName).Font((Font) new Font("Verdana"))
+            TabPar1.Append("Test Case: " + Cproperties.TestCaseName).Font((Font) new Font("Verdana"))
                 .FontSize(12D)
                 .Bold()
                 .SpacingAfter(20);
@@ -71,6 +69,7 @@ namespace Redlocon
             Paragraph TabPar = doc.InsertParagraph();
             TabPar.InsertTableBeforeSelf(t);
             TabPar.SpacingAfter(20);
+            TabPar.KeepLinesTogether();
 
             if (Cproperties.FinalResult =="Passed")
             {
@@ -103,7 +102,7 @@ namespace Redlocon
 
 
             //***Add a picture 
-            if (Cproperties.ArrayOfGraphics != null)
+            /*if (Cproperties.ArrayOfGraphics != null)
             {
                 //Replace "Slash" with "Backslash"
                 Cproperties.ArrayOfGraphics = Cproperties.ArrayOfGraphics.Replace("/", "\\");
@@ -138,9 +137,10 @@ namespace Redlocon
                     par.Append("\nGraphic " + i);
                     par.Bold();
                 } 
-            }
+            }*/
 
             doc.Save();
+            FrmMain.ResetVariables();
         }
     }
 }
