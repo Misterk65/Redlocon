@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Redlocon.TS8980Classes;
 
 namespace Redlocon.TS8950Classes
 {
-    class CTC64
+    class CTC67
     {
         private static readonly string[] TableHeader1 = new string[]
         {
@@ -18,7 +15,6 @@ namespace Redlocon.TS8950Classes
             
             "TEST\nSTEP","Samples\n(#)", "Errors\n(#)", "NER1\nratio", "EARLYPASS\nLIMIT","NER0_A\nratio",
             "EARLYFAIL\nLIMIT","INTERIM\nRESULT"
-
         };
 
         public static void CreateTableContent(string filePath)
@@ -43,8 +39,8 @@ namespace Redlocon.TS8950Classes
                         break;
                     }
 
-                    if (line.Contains("Test Step Parameters") && 
-                        line.Contains("Not applicable for UEs Power Class") ==false)
+                    if (line.Contains("Test Step Parameters") &&
+                        line.Contains("Not applicable for UEs Power Class") == false)
                     {
                         //add test step
                         string[] stepStrings = line.Split(':');
@@ -61,9 +57,9 @@ namespace Redlocon.TS8950Classes
 
                     if (line.Contains("EARLY PASS detected"))
                     {
-                        
+
                         earlyPass = "(EARLY PASS) ";
-                        
+
                     }
 
                     if (line.Contains("Test Step Result"))
@@ -73,7 +69,7 @@ namespace Redlocon.TS8950Classes
                         var res = resultStrings[1].Trim();
                         if (earlyPass != String.Empty)
                         {
-                            measValues = measValues + ";" + earlyPass + res; 
+                            measValues = measValues + ";" + earlyPass + res;
                         }
                         else
                         {
@@ -87,12 +83,22 @@ namespace Redlocon.TS8950Classes
             Cproperties.TableHeader = TableHeader1;
             Cproperties.TableBody = BodyList.ToArray();
         }
-        public static void CreateReportTC64(string filePath)
+        public static void CreateReportTC67(string filePath)
         {
             Cts8950Common.GetTestReportParameter(filePath);
             CreateTableContent(filePath);
             //Cts8950Common.GetGraphicResults(filePath);
-            CWordDocumentOutput.MakeDoc(FrmMain.ReportOutputPath);
+            if (File.Exists(Path.Combine(FrmMain.ReportOutputPath,Cproperties.DocxReportName + ".docx")))
+            {
+                Cproperties.TC65Counter++;
+                Cproperties.DocxReportName = Cproperties.DocxReportName + Cproperties.TC65Counter;
+                CWordDocumentOutput.MakeDoc(FrmMain.ReportOutputPath); 
+                
+            }
+            else
+            {
+                CWordDocumentOutput.MakeDoc(FrmMain.ReportOutputPath);
+            }
         }
     }
 }

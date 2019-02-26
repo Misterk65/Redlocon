@@ -35,14 +35,6 @@ namespace Redlocon.TS8950Classes
                         break;
                     }
 
-                    /*if (line.Contains("Test Step Parameters") && line.Contains("Not applicable") == false)
-                    {
-                        stepStrings = line.Split(':');
-                        step = stepStrings[1].Trim();
-                        stepStrings = step.Split(' ');
-                        step = stepStrings[1];
-                    }*/
-
                     if (Regex.IsMatch(line, @"^\d+"))
                     {
                         line = Regex.Replace(line, "\\s+", ";");
@@ -52,28 +44,6 @@ namespace Redlocon.TS8950Classes
                         BodyList.Add(measValues);
                     }
 
-                    /*if (Regex.IsMatch(line, @"^\d+"))
-                    {
-                        line = Regex.Replace(line, "\\s+", ";");
-                        if (i <=1)
-                        {
-                            if (measValues==String.Empty)
-                            {
-                                measValues = line;
-                                i++;
-                            }
-                            else
-                            {
-                                measValues = measValues + line.Substring(2);
-                                measValues = measValues.Substring(0, measValues.Length - 1);
-                                measValues = measValues.Replace("Not;Meas", "Not Meas");//todo better way to be found
-                                measValues = measValues.Replace(";;", ";");//todo better way to be found
-                                i = 0;
-                                BodyList.Add(measValues);
-                                measValues = "";
-                            }
-                        }*/
-           
                 }
             }
 

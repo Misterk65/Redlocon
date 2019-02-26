@@ -1,4 +1,6 @@
-﻿using Redlocon.TS8950Classes;
+﻿using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using Redlocon.TS8950Classes;
 using Redlocon.TS8980Classes;
 
 namespace Redlocon
@@ -7,7 +9,8 @@ namespace Redlocon
     {
         public static void SelectTestCase(string tcNumber, string fullPath)
         {
-            switch (tcNumber)
+
+            switch (CheckForProcedure(tcNumber))
             {
                 case "TC5.02.00"://TS8950
                     CTC52.CreateReportTC52(fullPath);
@@ -30,8 +33,14 @@ namespace Redlocon
                 case "TC6.04.00"://TS8950
                     CTC64.CreateReportTC64(fullPath);
                     break;
-                case "TC6.05.00"://TS8950
+                case "TC6.05.00.P1"://TS8950
                     CTC65.CreateReportTC65(fullPath);
+                    break;
+                case "TC6.07.00"://TS8950
+                    CTC67.CreateReportTC67(fullPath);
+                    break;
+                case "TC6.08.00"://TS8950
+                    CTC68.CreateReportTC68(fullPath);
                     break;
                 case "13.3.4.1":
                     if (fullPath.Contains("SummaryReport.xml"))
@@ -56,6 +65,27 @@ namespace Redlocon
                     break;
                 case "TC13.4"://TS8950
                     CTC134.CreateReportTC134(fullPath);
+                    break;
+                case "TC14.2.1"://TS8950
+                    CTC1421.CreateReportTC1421(fullPath);
+                    break;
+                case "TC14.6.1"://TS8950
+                    CTC1461.CreateReportTC1461(fullPath);
+                    break;
+                case "TC14.8.1"://TS8950
+                    CTC1481.CreateReportTC1481(fullPath);
+                    break;
+                case "TC14.8.3"://TS8950
+                    CTC1481.CreateReportTC1481(fullPath);
+                    break;
+                case "TC14.18.1"://TS8950
+                    CTC14181.CreateReportTC14181(fullPath);
+                    break;
+                case "TC14.18.3"://TS8950
+                    CTC14183.CreateReportTC14183(fullPath);
+                    break;
+                case "TC14.18.4"://TS8950
+                    CTC14184.CreateReportTC14184(fullPath);
                     break;
                 case "4.2.3.1":
                     if (fullPath.Contains("SummaryReport.xml"))
@@ -84,6 +114,23 @@ namespace Redlocon
                 default:
                     break;
             }
+        }
+
+        private static string CheckForProcedure(string tc)
+        {
+            string output = "";
+            string[] helpArr = tc.Split('.');
+
+            if (Regex.IsMatch(helpArr[helpArr.Length-1], @"\[A-Z]"))
+            {
+                output = tc.Replace("." + helpArr[helpArr.Length - 1], "");
+            }
+            else
+            {
+                output = tc;
+            }
+
+            return output;
         }
     }
 }

@@ -82,12 +82,20 @@
     <Compile Include="TS8950Classes\CTC132.cs" />
     <Compile Include="TS8950Classes\CTC134.cs" />
     <Compile Include="TS8950Classes\CTC131.cs" />
+    <Compile Include="TS8950Classes\CTC14184.cs" />
+    <Compile Include="TS8950Classes\CTC14183.cs" />
+    <Compile Include="TS8950Classes\CTC14181.cs" />
+    <Compile Include="TS8950Classes\CTC1481.cs" />
+    <Compile Include="TS8950Classes\CTC1461.cs" />
     <Compile Include="TS8950Classes\CTC511.cs" />
     <Compile Include="TS8950Classes\CTC510.cs" />
     <Compile Include="TS8950Classes\CTC59.cs" />
     <Compile Include="TS8950Classes\CTC543.cs" />
     <Compile Include="TS8950Classes\CTC52.cs" />
     <Compile Include="TS8950Classes\CTC13341.cs" />
+    <Compile Include="TS8950Classes\CTC1421.cs" />
+    <Compile Include="TS8950Classes\CTC68.cs" />
+    <Compile Include="TS8950Classes\CTC67.cs" />
     <Compile Include="TS8950Classes\CTC65.cs" />
     <Compile Include="TS8950Classes\CTC64.cs" />
     <Compile Include="TS8950Classes\CTC62.cs" />
@@ -114,6 +122,7 @@
     <EmbeddedResource Include="SupportedTest.resx">
       <DependentUpon>SupportedTest.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Documentation\Supported.xlsx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -128,9 +137,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Documentation\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Supported.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
