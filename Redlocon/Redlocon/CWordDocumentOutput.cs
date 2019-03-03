@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using Xceed.Words.NET;
 using Font = Xceed.Words.NET.Font;
-using Image = Xceed.Words.NET.Image;
 using Orientation = Xceed.Words.NET.Orientation;
 
 namespace Redlocon
@@ -81,7 +80,7 @@ namespace Redlocon
             }
             else if(Cproperties.FinalResult == "Failed")
             {
-                TabPar.Append(Cproperties.FinalResult)
+                TabPar.Append("\nFinal Result: " + Cproperties.FinalResult)
                     .Font(new Font("Verdana"))
                     .FontSize(10D)
                     .Bold()
@@ -89,7 +88,7 @@ namespace Redlocon
             }
             else
             {
-                TabPar.Append(Cproperties.FinalResult)
+                TabPar.Append("\nFinal Result: " + Cproperties.FinalResult)
                     .Font(new Font("Verdana"))
                     .FontSize(10D)
                     .Bold()

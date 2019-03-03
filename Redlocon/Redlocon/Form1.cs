@@ -143,6 +143,11 @@ namespace Redlocon
 
                                         if (line.StartsWith("Test Case"))
                                         {
+                                            if (line.Contains("-"))
+                                            {
+                                                line = line.Replace("-", " ");
+                                            }
+
                                             var helpArr = line.Split(':');
                                             helpArr = helpArr[1].TrimStart().Split(' ');
                                             if (helpArr[0].StartsWith("TC5."))
@@ -152,6 +157,7 @@ namespace Redlocon
                                                              helpArr[1] + "." +
                                                              helpArr[2];
                                             }
+                                            
                                             reader.Close();
                                             Cselection.SelectTestCase(helpArr[0], itemFileInfo.FullName);
                                             break;

@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using Redlocon.TS8980Classes;
 
 namespace Redlocon.TS8950Classes
 {
-    public class CTC131
-    { //TEST         NUM          MAX PK       PK PH ERR    MAX RMS      RMS PH ERR   MAX FR       FR ERR       AV FR        INTERIM
-      //STEP         BURSTS       PH ERR deg   LIMIT deg    PH ERR deg   LIMIT deg    ERR ppm      LIMIT ppm    ERR ppm      RESULT
+    class CTC14185
+    {
         private static readonly string[] TableHeader1 = new string[]
         {
-            "TEST\nSTEP", "NUM\nBURSTS", "MAX PK\nPH ERR deg","PK PH ERR\nLIMIT deg","MAX RMS\nPH ERR deg", "RMS PH ERR\nLIMIT deg",
-            "MAX FR\nERR ppm","FR ERR\nLIMIT ppm","AV FR\nERR ppm","INTERIM\nRESULT"
+            //TEST              ERROR             SAMPLES           ERROR             ERROR             INTERIM
+            //STEP              TYPE              MEASURED          RATE              LIMIT             RESULT   
+            "TEST\nSTEP","MEAS\nNUM", "BLOCK\nSIGNAL", "BL FREQ\nin MHz", "BL LEVEL\nin dBm","ERROR\nTYPE",
+            "SAMPLES\nMEASURED", "ERROR\nRATE","ERROR\nLIMIT","INTERIM\nRESULT"
         };
 
         public static void CreateTableContent(string filePath)
@@ -21,12 +22,14 @@ namespace Redlocon.TS8950Classes
             var i = 0;
             string measValues = "";
 
+
             using (StreamReader reader = new StreamReader(filePath))
-            {
+            { 
+                string line = "";
                 
                 while (true)
                 {
-                    string line = reader.ReadLine();
+                    line = reader.ReadLine();
 
                     if (line == null)
                     {
@@ -37,26 +40,32 @@ namespace Redlocon.TS8950Classes
                     {
                         line = Regex.Replace(line, "\\s+", ";");
 
-                        measValues = line;
+                        measValues = line.Replace("BCS;ACK/N", "BCS ACK/N");//todo better solution needed
                         measValues = measValues.Substring(0, measValues.Length - 1);
                         BodyList.Add(measValues);
                     }
-
                 }
             }
 
             Cproperties.TableHeader = TableHeader1;
             Cproperties.TableBody = BodyList.ToArray();
         }
-
-        public static void CreateReportTC131(string filePath)
+        public static void CreateReportTC14185(string filePath)
         {
             Cts8950Common.GetTestReportParameter(filePath);
             CreateTableContent(filePath);
             //Cts8950Common.GetGraphicResults(filePath);
-            CWordDocumentOutput.MakeDoc(FrmMain.ReportOutputPath);
+            if (File.Exists(Path.Combine(FrmMain.ReportOutputPath,Cproperties.DocxReportName + ".docx")))
+            {
+                Cproperties.TC65Counter++;
+                Cproperties.DocxReportName = Cproperties.DocxReportName + Cproperties.TC65Counter;
+                CWordDocumentOutput.MakeDoc(FrmMain.ReportOutputPath); 
+                
+            }
+            else
+            {
+                CWordDocumentOutput.MakeDoc(FrmMain.ReportOutputPath);
+            }
         }
     }
-
-    
 }

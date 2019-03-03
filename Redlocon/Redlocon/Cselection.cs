@@ -18,6 +18,9 @@ namespace Redlocon
                 case "TC5.04.03"://TS8950
                     CTC543.CreateReportTC543(fullPath);
                     break;
+                case "TC5.04.04"://TS8950
+                    CTC544.CreateReportTC544(fullPath);
+                    break;
                 case "TC5.09.00"://TS8950
                     CTC59.CreateReportTC59(fullPath);
                     break;
@@ -66,11 +69,26 @@ namespace Redlocon
                 case "TC13.4"://TS8950
                     CTC134.CreateReportTC134(fullPath);
                     break;
+                case "TC13.16.2.4.1"://TS8950
+                    CTC1316241.CreateReportTC1316241(fullPath);
+                    break;
+                case "TC13.17.2"://TS8950
+                    CTC13172.CreateReportTC13172(fullPath);
+                    break;
+                case "TC13.17.4"://TS8950
+                    CTC13174.CreateReportTC13174(fullPath);
+                    break;
                 case "TC14.2.1"://TS8950
                     CTC1421.CreateReportTC1421(fullPath);
                     break;
+                case "TC14.5.1.1"://TS8950
+                    CTC14511.CreateReportTC14511(fullPath);
+                    break;
                 case "TC14.6.1"://TS8950
                     CTC1461.CreateReportTC1461(fullPath);
+                    break;
+                case "TC14.7.1"://TS8950
+                    CTC1471.CreateReportTC1471(fullPath);
                     break;
                 case "TC14.8.1"://TS8950
                     CTC1481.CreateReportTC1481(fullPath);
@@ -86,6 +104,9 @@ namespace Redlocon
                     break;
                 case "TC14.18.4"://TS8950
                     CTC14184.CreateReportTC14184(fullPath);
+                    break;
+                case "TC14.18.5"://TS8950
+                    CTC14185.CreateReportTC14185(fullPath);
                     break;
                 case "4.2.3.1":
                     if (fullPath.Contains("SummaryReport.xml"))

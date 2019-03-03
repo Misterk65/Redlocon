@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using Redlocon.TS8980Classes;
 
 namespace Redlocon.TS8950Classes
 {
-    public class CTC131
-    { //TEST         NUM          MAX PK       PK PH ERR    MAX RMS      RMS PH ERR   MAX FR       FR ERR       AV FR        INTERIM
-      //STEP         BURSTS       PH ERR deg   LIMIT deg    PH ERR deg   LIMIT deg    ERR ppm      LIMIT ppm    ERR ppm      RESULT
+    public class CTC544
+    {
         private static readonly string[] TableHeader1 = new string[]
         {
-            "TEST\nSTEP", "NUM\nBURSTS", "MAX PK\nPH ERR deg","PK PH ERR\nLIMIT deg","MAX RMS\nPH ERR deg", "RMS PH ERR\nLIMIT deg",
-            "MAX FR\nERR ppm","FR ERR\nLIMIT ppm","AV FR\nERR ppm","INTERIM\nRESULT"
+            "TEST\nSTEP", "TEST TIME\nSec", "UL POWER\ndBm", "LIMIT_A\ndBm", "INTERIM\nRESULT_A"
+
+        };
+
+        private static readonly string[] TableHeader2 = new string[]
+        {
+            "TEST\nSTEP", "TEST TIME\nSec", "UL POWER\ndBm", "LIMIT A\ndBm", "INTERIM\nRESULT_A", "LIMIT B\ndBm", "INTERIM\nRESULT_B"
+
         };
 
         public static void CreateTableContent(string filePath)
@@ -20,10 +26,13 @@ namespace Redlocon.TS8950Classes
             List<string> BodyList = new List<string>();
             var i = 0;
             string measValues = "";
+            
 
             using (StreamReader reader = new StreamReader(filePath))
             {
-                
+                string[] stepStrings;
+                string step = "";
+
                 while (true)
                 {
                     string line = reader.ReadLine();
@@ -37,19 +46,26 @@ namespace Redlocon.TS8950Classes
                     {
                         line = Regex.Replace(line, "\\s+", ";");
 
+                        //Adjust to long header
+                        string[] helpArr = line.Split(';');
+
+                        if (helpArr.Length == 6)
+                        {
+                            line = line.Replace("Inside","Inside;-;-");
+                        }
+
                         measValues = line;
                         measValues = measValues.Substring(0, measValues.Length - 1);
                         BodyList.Add(measValues);
                     }
-
                 }
             }
 
-            Cproperties.TableHeader = TableHeader1;
+            Cproperties.TableHeader = TableHeader2;
             Cproperties.TableBody = BodyList.ToArray();
         }
 
-        public static void CreateReportTC131(string filePath)
+        public static void CreateReportTC544(string filePath)
         {
             Cts8950Common.GetTestReportParameter(filePath);
             CreateTableContent(filePath);
