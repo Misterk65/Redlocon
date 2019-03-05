@@ -6,12 +6,12 @@ using Redlocon.TS8980Classes;
 
 namespace Redlocon.TS8950Classes
 {
-    public class CTC13174
+    public class CTC13163
     {
         private static readonly string[] TableHeader1 = new string[]
         {
-            "TEST\nSTEP", "MEAS\nNUMBER", "OFFSET FREQ\nin MHz","MEAS LEVEL\nin dBm", "MEAS LEVEL\nin dBc","LIMIT\nin dBc",
-            "EXC LIMIT\nindBc","INTERIM\nRESULT"
+            "TEST\nSTEP", "MEAS\nNUMBER", "OFFSET FREQ\nin MHz","MEAS LEVEL\nin dBm", "LIMIT\nin dBm",
+            "EXC LIMIT\nin dBm","INTERIM\nRESULT"
         };
 
         public static void CreateTableContent(string filePath)
@@ -49,7 +49,7 @@ namespace Redlocon.TS8950Classes
             Cproperties.TableBody = BodyList.ToArray();
         }
 
-        public static void CreateReportTC13174(string filePath)
+        public static void CreateReportTC13163(string filePath)
         {
             Cts8950Common.GetTestReportParameter(filePath);
             CreateTableContent(filePath);

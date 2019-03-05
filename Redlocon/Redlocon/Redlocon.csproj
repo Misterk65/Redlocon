@@ -76,8 +76,9 @@
     <Compile Include="SupportedTest.Designer.cs">
       <DependentUpon>SupportedTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="TS8950Classes\CTC1317341.cs" />
+    <Compile Include="TS8950Classes\CTC13163.cs" />
     <Compile Include="TS8950Classes\CTC1316241.cs" />
-    <Compile Include="TS8950Classes\CTC13174.cs" />
     <Compile Include="TS8950Classes\CTC132.cs" />
     <Compile Include="TS8950Classes\CTC13172.cs" />
     <Compile Include="TS8950Classes\CTC134.cs" />

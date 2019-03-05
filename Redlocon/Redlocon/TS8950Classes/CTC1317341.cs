@@ -6,7 +6,7 @@ using Redlocon.TS8980Classes;
 
 namespace Redlocon.TS8950Classes
 {
-    public class CTC1316241
+    public class CTC1317341
     {
         private static readonly string[] TableHeader1 = new string[]
         {
@@ -36,9 +36,9 @@ namespace Redlocon.TS8950Classes
 
                     if (line.Contains("Measurement Step Parameters : STEP"))
                     {
-                        string[] helpArr = line.Split(':');
-                        helpArr = helpArr[1].Trim().Split(' ');
-                        measStep = helpArr[1].Trim();
+                       string[] helpArr = line.Split(':');
+                       helpArr = helpArr[1].Trim().Split(' ');
+                       measStep = helpArr[1].Trim();
                     }
 
                     if (line.Contains("Measurement Timeslot :"))
@@ -53,15 +53,15 @@ namespace Redlocon.TS8950Classes
                         if (Regex.IsMatch(line, @"^\d+"))
                         {
                             line = Regex.Replace(line, "\\s+", ";");
-
+                            
                             measValues = line.Replace("Not;Meas", "Not Meas");
                             measValues = measValues.Substring(0, measValues.Length - 1);
-
+                            
                         }
 
                         string[] helpArrIn = measValues.Split(';');
                         measValues = helpArrIn[0] + ";" + measStep + ";" +
-                                     timeSlot + ";" + helpArrIn[1] + ";" +
+                                     timeSlot + ";" + helpArrIn[1] + ";" + 
                                      helpArrIn[2] + ";" +
                                      helpArrIn[3] + ";" +
                                      helpArrIn[4] + ";" +
@@ -81,7 +81,7 @@ namespace Redlocon.TS8950Classes
             Cproperties.TableBody = BodyList.ToArray();
         }
 
-        public static void CreateReportTC1316241(string filePath)
+        public static void CreateReportTC1317341(string filePath)
         {
             Cts8950Common.GetTestReportParameter(filePath);
             CreateTableContent(filePath);

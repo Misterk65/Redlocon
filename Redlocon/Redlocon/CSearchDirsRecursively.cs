@@ -24,12 +24,12 @@ namespace Redlocon
         {
             foreach (var compressedfile in compressedfiles)
             {
-                if (compressedfile.Name.EndsWith(".zip"))
+            /*    if (compressedfile.Name.EndsWith(".zip"))
                 {
                     string zipPath = compressedfile.FullName;
                     string extractPath = compressedfile.FullName.Replace(compressedfile.Name, "");
 
-                    if (File.Exists(extractPath))
+                    if (!File.Exists(extractPath))
                     {
                         ZipFile.ExtractToDirectory(zipPath, extractPath); 
                     }
@@ -39,7 +39,7 @@ namespace Redlocon
                         File.Delete(zipPath);
                     }
                    
-                }
+                }*/
             }
 
         }

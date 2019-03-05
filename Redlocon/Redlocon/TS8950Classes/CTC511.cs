@@ -13,9 +13,10 @@ namespace Redlocon.TS8950Classes
         {
             //TEST                  FREQ                 MEAS                 LIMIT_A              INTERIM
             //STEP                  MHz                   dBm                 dBm                 RESULT
-            "MEAS\nSTEP", "TEST\nSTEP","FREQ\nMHz", "MEAS\ndBm", "LIMIT_A\ndBm", "INTERIM\nRESULT"
+            "MEAS\nSTEP", "TEST\nSTEP","FREQ\nMHz", "MEAS\ndBm", "(EXC.)LIMIT_A\ndBm", "EXC.\nCount", "INTERIM\nRESULT"
 
         };
+
 
         public static void CreateTableContent(string filePath)
         {
@@ -38,7 +39,7 @@ namespace Redlocon.TS8950Classes
                         break;
                     }
 
-                    if (line.Contains("Test Step Parameters") && line.Contains("Not applicable") == false)
+                    if (line.Contains("Measurement Step Parameters"))
                     {
                         stepStrings = line.Split(':');
                         step = stepStrings[1].Trim();
@@ -52,6 +53,15 @@ namespace Redlocon.TS8950Classes
 
                         measValues = step + ";" + line;
                         measValues = measValues.Substring(0, measValues.Length - 1);
+
+                        string[] helpArr = measValues.Split(';');
+
+                        if (helpArr.Length == 6)
+                        {
+                            measValues = measValues.Replace(helpArr[helpArr.Length - 1],
+                                "-;" + helpArr[helpArr.Length - 1]);
+                        }
+
                         BodyList.Add(measValues);
                     }
                 }

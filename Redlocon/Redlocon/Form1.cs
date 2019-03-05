@@ -13,6 +13,8 @@ namespace Redlocon
         public static string ReportOutputPath { get; set; }
         public static string ResultRootPath { get; set; }
         public static string TestcaseSourcePath { get; set; }
+        
+        public static string errString = "";
         public FrmMain()
         {
             InitializeComponent();
@@ -172,6 +174,11 @@ namespace Redlocon
                         }
 
                     }
+                }
+
+                if (errString !="")
+                {
+                    File.WriteAllText(Path.Combine(Application.StartupPath,"Err.txt"),errString);
                 }
                 MessageBox.Show("Finished", "Importing Finshed",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }

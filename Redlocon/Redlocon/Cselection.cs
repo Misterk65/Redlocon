@@ -69,14 +69,17 @@ namespace Redlocon
                 case "TC13.4"://TS8950
                     CTC134.CreateReportTC134(fullPath);
                     break;
+                case "TC13.16.3"://TS8950
+                    CTC13163.CreateReportTC13163(fullPath);
+                    break;
                 case "TC13.16.2.4.1"://TS8950
                     CTC1316241.CreateReportTC1316241(fullPath);
                     break;
                 case "TC13.17.2"://TS8950
                     CTC13172.CreateReportTC13172(fullPath);
                     break;
-                case "TC13.17.4"://TS8950
-                    CTC13174.CreateReportTC13174(fullPath);
+                case "TC13.17.3.4.1"://TS8950
+                    CTC1317341.CreateReportTC1317341(fullPath);
                     break;
                 case "TC14.2.1"://TS8950
                     CTC1421.CreateReportTC1421(fullPath);

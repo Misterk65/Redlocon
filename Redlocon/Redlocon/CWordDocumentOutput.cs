@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using Xceed.Words.NET;
@@ -38,25 +39,33 @@ namespace Redlocon
                 counter++;
             }
 
-            //Content
-            counter = 1;
-            var zindex = 0;
-            foreach (var item in Cproperties.TableBody)
+            try
             {
-                if (item != null)
+                //Content
+                counter = 1;
+                var zindex = 0;
+                foreach (var item in Cproperties.TableBody)
                 {
-                    string[] helpArr = item.Split(';');
-
-                    foreach (var set in helpArr)
+                    if (item != null)
                     {
-                        t.Rows[counter].Cells[zindex].Paragraphs.First().Append(set);
-                        zindex++;
+                        string[] helpArr = item.Split(';');
+
+                        foreach (var set in helpArr)
+                        {
+                            t.Rows[counter].Cells[zindex].Paragraphs.First().Append(set);
+                            zindex++;
+                        }
+
+                        zindex = 0;
+                        counter++;
+
                     }
-
-                    zindex = 0;
-                    counter++;
-
                 }
+            }
+            catch (System.Exception)
+            {
+
+                FrmMain.errString = FrmMain.errString + Cproperties.DocxReportName + Environment.NewLine;
             }
 
             Paragraph TabPar1 = doc.InsertParagraph();
