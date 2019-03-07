@@ -9,9 +9,12 @@ namespace Redlocon.TS8950Classes
     class CTC14184
     {
         private static readonly string[] TableHeader1 = new string[]
+        {  
+            "TEST\nSTEP","ERROR\nTYPE", "SAMPLES\nMEASURED", "ERROR_A\nRATE", "ERROR_A\nLimit","INTERIM\nRESULT"
+        };
+
+        private static readonly string[] TableHeader2 = new string[]
         {
-            //TEST              ERROR             SAMPLES           ERROR             ERROR             INTERIM
-            //STEP              TYPE              MEASURED          RATE              LIMIT             RESULT   
             "TEST\nSTEP","ERROR\nTYPE", "SAMPLES\nMEASURED", "ERROR_A\nRATE", "ERROR_A\nLimit","INTERIM\nRESULT"
         };
 
@@ -19,6 +22,7 @@ namespace Redlocon.TS8950Classes
         {
             List<string> BodyList = new List<string>();
             var i = 0;
+            var testCaseProf = "";
             string measValues = "";
 
 
@@ -60,7 +64,7 @@ namespace Redlocon.TS8950Classes
                         }
 
                         measValues = measValues.Replace(replace, newVal + ";");
-
+                        measValues = measValues.Replace("USF;BLER", "USF BLER");
 
                         measValues =  measValues.Substring(0, measValues.Length - 1);
                         BodyList.Add(measValues);
@@ -69,7 +73,15 @@ namespace Redlocon.TS8950Classes
                 }
             }
 
-            Cproperties.TableHeader = TableHeader1;
+            if (testCaseProf == "USF")
+            {
+                Cproperties.TableHeader = TableHeader2;
+            }
+            else
+            {
+                Cproperties.TableHeader = TableHeader1;
+            }
+
             Cproperties.TableBody = BodyList.ToArray();
         }
         public static void CreateReportTC14184(string filePath)

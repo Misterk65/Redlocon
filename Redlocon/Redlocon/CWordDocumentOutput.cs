@@ -13,10 +13,13 @@ namespace Redlocon
 
     public class CWordDocumentOutput
     {
+        public static string errPathOut;
+
         public static void MakeDoc(string filePath)
         {
             string fileName = Path.Combine(filePath, Cproperties.DocxReportName + ".docx") ;
- 
+
+
             var doc = DocX.Create(fileName);
             doc.PageLayout.Orientation = Orientation.Landscape;
 
@@ -65,7 +68,7 @@ namespace Redlocon
             catch (System.Exception)
             {
 
-                FrmMain.errString = FrmMain.errString + Cproperties.DocxReportName + Environment.NewLine;
+                FrmMain.errString = FrmMain.errString + errPathOut + "@" + Cproperties.DocxReportName + Environment.NewLine;
             }
 
             Paragraph TabPar1 = doc.InsertParagraph();

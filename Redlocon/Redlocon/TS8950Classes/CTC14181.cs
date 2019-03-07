@@ -60,6 +60,7 @@ namespace Redlocon.TS8950Classes
                         }
 
                         measValues = measValues.Replace(replace, newVal + ";");
+                        measValues = measValues.Replace("BCS;ACK/NACK", "BCS ACK/NACK");
 
 
                         measValues =  measValues.Substring(0, measValues.Length - 1);

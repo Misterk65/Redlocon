@@ -159,8 +159,9 @@ namespace Redlocon
                                                              helpArr[1] + "." +
                                                              helpArr[2];
                                             }
-                                            
                                             reader.Close();
+
+                                            CWordDocumentOutput.errPathOut = itemFileInfo.FullName;
                                             Cselection.SelectTestCase(helpArr[0], itemFileInfo.FullName);
                                             break;
                                         }

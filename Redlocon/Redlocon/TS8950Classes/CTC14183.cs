@@ -10,15 +10,21 @@ namespace Redlocon.TS8950Classes
     {
         private static readonly string[] TableHeader1 = new string[]
         {
-            //TEST              ERROR             SAMPLES           ERROR             ERROR             INTERIM
-            //STEP              TYPE              MEASURED          RATE              LIMIT             RESULT   
-            "TEST\nSTEP","ERROR\nTYPE", "SAMPLES\nMEASURED", "ERROR_A\nRATE", "ERROR_A\nLimit","INTERIM\nRESULT"
+           "TEST\nSTEP","ERROR\nTYPE", "SAMPLES\nMEASURED", "ERROR_A\nRATE", "ERROR_A\nLimit","INTERIM\nRESULT"
         };
+
+        private static readonly string[] TableHeader2 = new string[]
+        {
+            "TEST\nSTEP","MEAS\nTYPE", "SAMPLES\nMEASURED", "EVENTS\nMEASURED", "NORMALIZED\nERROR RATE","NORM.LIMIT\nEARLY PASS",
+            "NORM.LIMIT\nEARLY FAIL", "INTERIM\nRESULT"
+        };
+
 
         public static void CreateTableContent(string filePath)
         {
             List<string> BodyList = new List<string>();
             var i = 0;
+            var testCaseProf = "";
             string measValues = "";
 
 
@@ -35,6 +41,11 @@ namespace Redlocon.TS8950Classes
                     if (line == null)
                     {
                         break;
+                    }
+
+                    if (line.ToLower().Contains(" usf"))
+                    {
+                        testCaseProf = "USF";
                     }
 
                     if (Regex.IsMatch(line, @"^\d+"))
@@ -60,6 +71,7 @@ namespace Redlocon.TS8950Classes
                         }
 
                         measValues = measValues.Replace(replace, newVal + ";");
+                        measValues = measValues.Replace("USF;BLER", "USF BLER");
 
 
                         measValues =  measValues.Substring(0, measValues.Length - 1);
@@ -69,7 +81,14 @@ namespace Redlocon.TS8950Classes
                 }
             }
 
-            Cproperties.TableHeader = TableHeader1;
+            if (testCaseProf=="USF")
+            {
+                Cproperties.TableHeader = TableHeader2; 
+            }
+            else
+            {
+                Cproperties.TableHeader = TableHeader1;
+            }
             Cproperties.TableBody = BodyList.ToArray();
         }
         public static void CreateReportTC14183(string filePath)
