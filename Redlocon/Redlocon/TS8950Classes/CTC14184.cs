@@ -41,6 +41,11 @@ namespace Redlocon.TS8950Classes
                         break;
                     }
 
+                    if (line.Contains("Type : BCS ACK/NACK"))
+                    {
+                        testCaseProf = "BCS ACK/NACK";
+                    }
+
                     if (Regex.IsMatch(line, @"^\d+"))
                     {
                         measValues = Regex.Replace(line, @"\s+", ";");
@@ -49,7 +54,7 @@ namespace Redlocon.TS8950Classes
                         string replace = "";
                         string newVal = "";
                         string final = "";
-
+                        
                         foreach (var item in helpArr)
                         {
                             if (Regex.IsMatch(item, @"[A-Za-z]+"))
@@ -64,7 +69,7 @@ namespace Redlocon.TS8950Classes
                         }
 
                         measValues = measValues.Replace(replace, newVal + ";");
-                        measValues = measValues.Replace("USF;BLER", "USF BLER");
+                        measValues = measValues.Replace("BCS;ACK/NACK", "BCS ACK/NACK");
 
                         measValues =  measValues.Substring(0, measValues.Length - 1);
                         BodyList.Add(measValues);
@@ -73,7 +78,7 @@ namespace Redlocon.TS8950Classes
                 }
             }
 
-            if (testCaseProf == "USF")
+            if (testCaseProf == "BCS ACK/NACK")
             {
                 Cproperties.TableHeader = TableHeader2;
             }

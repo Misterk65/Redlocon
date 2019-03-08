@@ -40,7 +40,14 @@ namespace Redlocon.TS8950Classes
                     {
                         line = Regex.Replace(line, "\\s+", ";");
 
-                        measValues = line.Replace("BCS;ACK/N", "BCS ACK/N");//todo better solution needed
+                        if (line.Contains("BCS;ACK/N"))
+                        {
+                            measValues = line.Replace("BCS;ACK/N", "BCS ACK/N");//todo better solution needed
+                        }
+                        else if (line.Contains("USF;BLER"))
+                        {
+                            measValues = line.Replace("USF;BLER", "USF BLER");//todo better solution needed
+                        }
                         measValues = measValues.Substring(0, measValues.Length - 1);
                         BodyList.Add(measValues);
                     }

@@ -19,6 +19,12 @@ namespace Redlocon.TS8950Classes
             "NORM.LIMIT\nEARLY FAIL", "INTERIM\nRESULT"
         };
 
+        private static readonly string[] TableHeader3 = new string[]
+        {
+            "TEST\nSTEP","MEAS\nTYPE", "SAMPLES\nMEASURED",  "EVENTS\nMEASURED", "ERR MEASURED\nMEASURED", "NORMALIZED\nERROR RATE",
+            "NORM.LIMIT\nEARLY PASS", "NORM.LIMIT\nEARLY FAIL", "INTERIM\nRESULT"
+        };
+
 
         public static void CreateTableContent(string filePath)
         {
@@ -81,9 +87,15 @@ namespace Redlocon.TS8950Classes
                 }
             }
 
-            if (testCaseProf=="USF")
+            string[] helpArrUsf = measValues.Split(';');
+
+            if (testCaseProf=="USF" && helpArrUsf.Length==8)
             {
                 Cproperties.TableHeader = TableHeader2; 
+            }
+            else if(testCaseProf == "USF" && helpArrUsf.Length == 9)
+            {
+                Cproperties.TableHeader = TableHeader3;
             }
             else
             {
