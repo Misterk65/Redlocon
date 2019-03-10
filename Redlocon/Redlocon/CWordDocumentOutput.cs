@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using Xceed.Words.NET;
 using Font = Xceed.Words.NET.Font;
 using Orientation = Xceed.Words.NET.Orientation;
@@ -61,7 +62,6 @@ namespace Redlocon
 
                         zindex = 0;
                         counter++;
-
                     }
                 }
             }
@@ -72,7 +72,7 @@ namespace Redlocon
             }
 
             Paragraph TabPar1 = doc.InsertParagraph();
-            TabPar1.Append("Test Case: " + Cproperties.TestCaseName).Font((Font) new Font("Verdana"))
+            TabPar1.Append("Test Case: " + Cproperties.ReportTestCaseName).Font((Font) new Font("Verdana"))
                 .FontSize(12D)
                 .Bold()
                 .SpacingAfter(20);

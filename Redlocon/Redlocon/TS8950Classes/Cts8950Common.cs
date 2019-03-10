@@ -6,6 +6,8 @@ namespace Redlocon.TS8980Classes
 {
     public class Cts8950Common
     {
+        private static bool name = false;
+
         public static void GetTestReportParameter(string filePath)
         {
             using (StreamReader reader = new StreamReader(filePath))
@@ -28,15 +30,16 @@ namespace Redlocon.TS8980Classes
                             Cproperties.DocxReportName.Length - 4);
 
                     }
-                    else if(line.Contains("Test Case"))
+                    else if(line.Contains("Test Case") && name==false)
                     {
                         //Test Case Name
+                        var helpArrReport = line.Split(':');
+                        Cproperties.ReportTestCaseName = helpArrReport[1].Trim();
+
                         var helpArr = Regex.Replace(line, @"\s+", " ").Split(':');
-                        //var helpArr = line.Split(':');
-                        if (Cproperties.TestCaseName==null)
-                        {
-                            Cproperties.TestCaseName = helpArr[1]; 
-                        }
+                        Cproperties.TestCaseName = helpArr[1];
+
+                        name = true;
 
                     }
                     else if (line.StartsWith("Final Verdict"))

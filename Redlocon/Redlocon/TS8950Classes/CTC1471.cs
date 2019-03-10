@@ -40,7 +40,16 @@ namespace Redlocon.TS8950Classes
                     {
                         line = Regex.Replace(line, "\\s+", ";");
 
-                        measValues = line.Replace("Cl;II","Cl II");//todo better solution needed
+                        if (line.Contains("Cl;II"))
+                        {
+                            measValues = line.Replace("Cl;II", "Cl II");//todo better solution needed 
+                        }
+
+                        if (measValues.Contains("Grpd;Lmt"))
+                        {
+                            measValues = measValues.Replace("Grpd;Lmt", "Grpd Lmt");//todo better solution needed 
+                        }
+
                         measValues = measValues.Substring(0, measValues.Length - 1);
                         BodyList.Add(measValues);
                     }

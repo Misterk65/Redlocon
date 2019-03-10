@@ -14,11 +14,18 @@ namespace Redlocon.TS8950Classes
             "EXC LIMIT\nin dBm","INTERIM\nRESULT"
         };
 
+        private static readonly string[] TableHeader2 = new string[]
+        {
+            "TEST\nSTEP","MEAS\nNUMBER", "OFFSET FREQ\nin MHz", "MEAS LEVEL\nin dBm","MEAS LEVEL\nin dBc",
+            "LIMIT\nin dBc", "EXC LIMIT\nin dBc","INTERIM\nRESULT"
+        };
+
         public static void CreateTableContent(string filePath)
         {
             List<string> BodyList = new List<string>();
             var i = 0;
             string measValues = "";
+            int headerSelector = 0;
 
             using (StreamReader reader = new StreamReader(filePath))
             {
@@ -39,13 +46,24 @@ namespace Redlocon.TS8950Classes
                             
                             measValues = line;
                             measValues = measValues.Substring(0, measValues.Length - 1);
+
+                            string[] helpArr = measValues.Split(';');
+                            headerSelector = helpArr.Length;
+
                             BodyList.Add(measValues);
                         }
                     }
                 }
             }
 
-            Cproperties.TableHeader = TableHeader1;
+            if (headerSelector == 8)
+            {
+                Cproperties.TableHeader = TableHeader2;
+            }
+            else
+            {
+                Cproperties.TableHeader = TableHeader1;
+            }
             Cproperties.TableBody = BodyList.ToArray();
         }
 

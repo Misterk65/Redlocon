@@ -4,6 +4,7 @@
     {
         public static string FinalResult { get; set; }
         public static string TestCaseName { get; set; }
+        public static string ReportTestCaseName { get; set; }
         public static string DocxReportName { get; set; }
         public static string ArrayOfGraphics { get; set; }
         public static string[] TableBody { get; set; }

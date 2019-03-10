@@ -10,23 +10,20 @@ namespace Redlocon.TS8950Classes
     {
         private static readonly string[] TableHeader1 = new string[]
         {
-            //TEST              ERROR             SAMPLES           ERROR             ERROR             INTERIM
-            //STEP              TYPE              MEASURED          RATE              LIMIT             RESULT   
             "TEST\nSTEP","MEAS\nNUM", "BLOCK\nSIGNAL", "BL FREQ\nin MHz", "BL LEVEL\nin dBm","ERROR\nTYPE",
             "SAMPLES\nMEASURED", "ERROR\nRATE","ERROR\nLIMIT","INTERIM\nRESULT"
         };
-
+        
         public static void CreateTableContent(string filePath)
         {
             List<string> BodyList = new List<string>();
             var i = 0;
             string measValues = "";
 
-
             using (StreamReader reader = new StreamReader(filePath))
-            { 
+            {
                 string line = "";
-                
+
                 while (true)
                 {
                     line = reader.ReadLine();
@@ -36,25 +33,31 @@ namespace Redlocon.TS8950Classes
                         break;
                     }
 
-                    if (Regex.IsMatch(line, @"^\d+"))
+                    if (Regex.IsMatch(line, @"^\d+") && line.Contains("Out of Band exception") == false)
                     {
                         line = Regex.Replace(line, "\\s+", ";");
 
                         if (line.Contains("BCS;ACK/N"))
                         {
-                            measValues = line.Replace("BCS;ACK/N", "BCS ACK/N");//todo better solution needed
+                            measValues = line.Replace("BCS;ACK/N", "BCS ACK/N"); //todo better solution needed
                         }
                         else if (line.Contains("USF;BLER"))
                         {
-                            measValues = line.Replace("USF;BLER", "USF BLER");//todo better solution needed
+                            measValues = line.Replace("USF;BLER", "USF BLER"); //todo better solution needed
                         }
+
+                        if (line.Contains("Grpd;Lmt"))
+                        {
+                            measValues = measValues.Replace("Grpd;Lmt", "Grpd Lmt"); //todo better solution needed
+                        }
+
                         measValues = measValues.Substring(0, measValues.Length - 1);
                         BodyList.Add(measValues);
                     }
                 }
             }
 
-            Cproperties.TableHeader = TableHeader1;
+            Cproperties.TableHeader = TableHeader1; 
             Cproperties.TableBody = BodyList.ToArray();
         }
         public static void CreateReportTC14185(string filePath)
