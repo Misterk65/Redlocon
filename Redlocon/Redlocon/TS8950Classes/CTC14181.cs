@@ -81,7 +81,7 @@ namespace Redlocon.TS8950Classes
             if (File.Exists(Path.Combine(FrmMain.ReportOutputPath,Cproperties.DocxReportName + ".docx")))
             {
                 Cproperties.TC65Counter++;
-                Cproperties.DocxReportName = Cproperties.DocxReportName + Cproperties.TC65Counter;
+                Cproperties.DocxReportName = Cproperties.DocxReportName + "_" + Cproperties.TC65Counter;
                 CWordDocumentOutput.MakeDoc(FrmMain.ReportOutputPath); 
                 
             }
