@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Redlocon.TS8980Classes
 {
@@ -32,10 +33,20 @@ namespace Redlocon.TS8980Classes
 
             foreach (var row in resultsTestStep)
             {
-
+                Regex regex = new Regex(@"[A-Za-z\-]+");
+                Match match = regex.Match(row.ItemArray[4].ToString());
+                
                 // [2]; [4]
-                helpVarTableBody = row.ItemArray[2] + ";" +
-                                   row.ItemArray[4] + ";";
+                if (match.Success)
+                {
+                    helpVarTableBody = row.ItemArray[2] + ";" +
+                                       row.ItemArray[4] + ";"; 
+                }
+                else
+                {
+                    helpVarTableBody = row.ItemArray[2] + ";" +
+                                       "None" + ";";
+                }
 
                 DataTable tblMeasurementStep = dataSet.Tables["measurementstep"];
                 DataRow[] resultsMeasurementStep = tblMeasurementStep.Select();
@@ -56,20 +67,13 @@ namespace Redlocon.TS8980Classes
                  * [0][2][3][4][5][8][7][9][10][13][15][21][1]
                  * Value arrangement
                  */
+
                 string[] helpArr = helpVarTableBody.Split(';');
-                helpVarTableBody = helpArr[0] + ";" +
-                                   helpArr[2].Substring(helpArr[2].Length - 2) + ";" +
-                                   helpArr[3] + ";" +
-                                   helpArr[4] + ";" +
-                                   helpArr[5] + ";" +
-                                   helpArr[8] + ";" +
-                                   helpArr[7].Substring(helpArr[7].Length-2) + ";" +
-                                   helpArr[9] + ";" +
-                                   helpArr[10] + ";" +
-                                   helpArr[13] + ";" +
-                                   helpArr[15] + ";" +
-                                   helpArr[21] + ";" +
-                                   helpArr[1];
+                if (helpArr.Length < 13) continue;
+                helpVarTableBody = helpArr[0] + ";" + helpArr[2].Substring(helpArr[2].Length - 2) + ";" + helpArr[3] +
+                                   ";" + helpArr[4] + ";" + helpArr[5] + ";" + helpArr[8] + ";" +
+                                   helpArr[7].Substring(helpArr[7].Length - 2) + ";" + helpArr[9] + ";" + helpArr[10] +
+                                   ";" + helpArr[13] + ";" + helpArr[15] + ";" + helpArr[21] + ";" + helpArr[1];
 
                 BodyList.Add(helpVarTableBody);
             }

@@ -92,6 +92,8 @@ namespace Redlocon
                
                 searchDirsRecursively.CheckAndUnpackZips(
                     searchDirsRecursively.FileList(ResultRootPath));
+
+                //todo doesn't enter here
                 
                 foreach (var itemFileInfo in searchDirsRecursively.FileList(ResultRootPath))
                 { 
@@ -181,7 +183,18 @@ namespace Redlocon
                 {
                     File.WriteAllText(Path.Combine(Application.StartupPath,"Err.txt"),errString);
                 }
-                MessageBox.Show("Finished", "Importing Finshed",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+                if (File.Exists(Path.Combine(Application.StartupPath, "Err.txt")))
+                {
+                    HandleImportErrors();
+                }
+                else
+                {
+                    MessageBox.Show("Finished", "Importing Finshed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                DeleteZipTemp();
+                
             }
         }
 
@@ -294,5 +307,20 @@ namespace Redlocon
             Cproperties.TestCaseName = "";
         }
 
+        public static void DeleteZipTemp()
+        {
+            /*string deleteZipTempPath = ResultRootPath;
+
+            if (Directory.Exists(deleteZipTempPath))
+            {
+                Directory.Delete(deleteZipTempPath,true);
+                //todo wrong path
+            }*/
+        }
+
+        public static void HandleImportErrors()
+        {
+            MessageBox.Show("Importing Errors", "Importing Finshed with Errors !", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }

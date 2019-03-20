@@ -98,7 +98,17 @@ namespace Redlocon.TS8950Classes
             Cts8950Common.GetTestReportParameter(filePath);
             CreateTableContent(filePath);
             //Cts8950Common.GetGraphicResults(filePath);
-            CWordDocumentOutput.MakeDoc(FrmMain.ReportOutputPath);
+            if (File.Exists(Path.Combine(FrmMain.ReportOutputPath, Cproperties.DocxReportName + ".docx")))
+            {
+                Cproperties.TC65Counter++;
+                Cproperties.DocxReportName = Cproperties.DocxReportName + "_UID_" + Cproperties.TC65Counter;
+                CWordDocumentOutput.MakeDoc(FrmMain.ReportOutputPath);
+
+            }
+            else
+            {
+                CWordDocumentOutput.MakeDoc(FrmMain.ReportOutputPath);
+            }
         }
     }
 }
