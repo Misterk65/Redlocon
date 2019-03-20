@@ -106,6 +106,8 @@
     <Compile Include="TS8950Classes\CTC62.cs" />
     <Compile Include="TS8950Classes\Cts8950Common.cs" />
     <Compile Include="TS8980Classes\Ctc1317341.cs" />
+    <Compile Include="TS8980Classes\Ctc1423.cs" />
+    <Compile Include="TS8980Classes\Ctc1421.cs" />
     <Compile Include="TS8980Classes\Ctc13341.cs" />
     <Compile Include="TS8980Classes\Ctc4231fdd.cs" />
     <Compile Include="TS8980Classes\Cts8980Common.cs" />

@@ -84,6 +84,30 @@ namespace Redlocon
                 case "TC14.2.1"://TS8950
                     CTC1421.CreateReportTC1421(fullPath);
                     break;
+                case "14.2.1":
+                    if (fullPath.Contains("SummaryReport.xml"))
+                    {
+                        Ctc1421.CreateReportTc1421(fullPath);
+                    }
+                    if (fullPath.Contains("ContestDbDataSet.xml"))
+                    {
+                        Ctc1421.CreateTableContent(fullPath);
+                        Cts8980Common.GetTestPlanName(fullPath);
+
+                    }
+                    break;
+                case "14.2.3":
+                    if (fullPath.Contains("SummaryReport.xml"))
+                    {
+                        Ctc1423.CreateReportTc1423(fullPath);
+                    }
+                    if (fullPath.Contains("ContestDbDataSet.xml"))
+                    {
+                        Ctc1423.CreateTableContent(fullPath);
+                        Cts8980Common.GetTestPlanName(fullPath);
+
+                    }
+                    break;
                 case "TC14.5.1.1"://TS8950
                     CTC14511.CreateReportTC14511(fullPath);
                     break;
